@@ -1,0 +1,25 @@
+services:
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000 --settings=pitch_insight_hub.settings.development
+    volumes:
+      - .:/code
+    ports:
+      - '8000:8000'
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=postgres://postgres:postgres@db:5432/pitch_insight_hub
+
+  db:
+    image: postgres:13
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_DB=pitch_insight_hub
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - '5432:5432'
+volumes:
+  postgres_data:

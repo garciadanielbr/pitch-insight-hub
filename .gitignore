@@ -1,0 +1,27 @@
+# Python
+*.pyc
+__pycache__/
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Django
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+# Docker
+docker-compose.override.yml
+
+# VS Code
+.vscode/
+
+# Misc
+.DS_Store
+*.swp
+*.bak
