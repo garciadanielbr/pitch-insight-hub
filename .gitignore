@@ -25,3 +25,6 @@ docker-compose.override.yml
 .DS_Store
 *.swp
 *.bak
+
+# Ignore .env file
+.env
