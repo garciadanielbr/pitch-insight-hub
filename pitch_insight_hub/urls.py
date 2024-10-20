@@ -16,16 +16,17 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from analytics.views import PlayerViewSet, MatchViewSet, PlayerPerformanceViewSet, TopScorersView, TeamPerformanceView
+from analytics.views import LeagueView, SeasonView, TeamView, FixtureView
 
 router = DefaultRouter()
-router.register(r'players', PlayerViewSet)
-router.register(r'matches', MatchViewSet)
-router.register(r'performances', PlayerPerformanceViewSet)
+router.register(r'leagues', LeagueView)
+router.register(r'seasons', SeasonView)
+router.register(r'teams', TeamView)
+router.register(r'fixtures', FixtureView)
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
-    path('api/top-scorers/', TopScorersView.as_view(), name='top-scorers'),
-    path('api/team-performance/', TeamPerformanceView.as_view(), name='team-performance'),
 ]
+

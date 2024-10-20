@@ -1,17 +1,22 @@
 from rest_framework import serializers
-from .models import Player, Match, PlayerPerformance
+from .models import League, Season, Team, Fixture
 
-class PlayerSerializer(serializers.ModelSerializer):
+class LeagueSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Player
+        model = League
         fields = '__all__'
 
-class MatchSerializer(serializers.ModelSerializer):
+class SeasonSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Match
+        model = Season
         fields = '__all__'
 
-class PlayerPerformanceSerializer(serializers.ModelSerializer):
+class TeamSerializer(serializers.ModelSerializer):
     class Meta:
-        model = PlayerPerformance
+        model = Team
+        fields = '__all__'
+
+class FixtureSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Fixture
         fields = '__all__'
