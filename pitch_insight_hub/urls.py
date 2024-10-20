@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from analytics.views import LeagueView, SeasonView, TeamView, FixtureView
+from analytics.views import LeagueView, SeasonView, TeamView, FixtureView, TeamFormGuideView
 
 router = DefaultRouter()
 router.register(r'leagues', LeagueView)
@@ -28,5 +28,6 @@ router.register(r'fixtures', FixtureView)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
+    path('api/teams/<int:team_id>/form-guide/', TeamFormGuideView.as_view(), name='team-form-guide'),
 ]
 
