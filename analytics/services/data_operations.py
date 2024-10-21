@@ -36,6 +36,11 @@ def populate_initial_data():
 def fetch_and_store_teams():
     seasons_to_fetch = Season.objects.filter(fetch_required=True)
     
+    if not seasons_to_fetch.exists():
+        return 'No seasons available to fetch data.'
+
+    new_teams_count = 0  # Counter for new teams added
+
     for season in seasons_to_fetch:
         teams_data = api_client.get_teams(season.league.id, season.year)
         
@@ -47,6 +52,9 @@ def fetch_and_store_teams():
                     'country': team_data['team']['country']
                 }
             )
+
+            if created:  # Check if the team was newly created
+                new_teams_count += 1
             
             SeasonTeam.objects.get_or_create(
                 season=season,
@@ -56,15 +64,25 @@ def fetch_and_store_teams():
         season.fetch_required = False
         season.save()
 
+    if new_teams_count > 0:
+        return f'Successfully fetched and stored {new_teams_count} teams data.'
+    else:
+        return 'Data fetched successfully but no new teams were added.'
+
 @transaction.atomic
 def fetch_and_store_fixtures():
     seasons_to_fetch = Season.objects.filter(fetch_required=True)
-    
+
+    if not seasons_to_fetch.exists():
+        return 'No seasons available to fetch data.'
+
+    new_fixtures_count = 0  # Counter for new fixtures added 
+
     for season in seasons_to_fetch:
         fixtures_data = api_client.get_fixtures(season.league.id, season.year)
         
         for fixture_data in fixtures_data['response']:
-            Fixture.objects.update_or_create(
+            fixture, created = Fixture.objects.update_or_create(
                 id=fixture_data['fixture']['id'],
                 defaults={
                     'season': season,
@@ -77,6 +95,14 @@ def fetch_and_store_fixtures():
                     'score': fixture_data['score']
                 }
             )
+
+            if created:  # Check if fixture was newly created
+                new_fixtures_count += 1
         
         season.fetch_required = False
-        season.save()        
+        season.save()  
+
+    if new_fixtures_count > 0:
+        return f'Successfully fetched and stored {new_fixtures_count} fixtures data.'
+    else:
+        return 'Data fetched successfully but no new fixtures were added.'      

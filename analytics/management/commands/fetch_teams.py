@@ -5,5 +5,5 @@ class Command(BaseCommand):
     help = 'Fetch teams data from API-Football and store in database'
 
     def handle(self, *args, **options):
-        fetch_and_store_teams()
-        self.stdout.write(self.style.SUCCESS('Successfully fetched and stored teams data'))
+        message = fetch_and_store_teams()
+        self.stdout.write(self.style.SUCCESS(message))

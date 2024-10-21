@@ -5,5 +5,5 @@ class Command(BaseCommand):
     help = 'Fetch fixtures data from API-Football and store in database'
 
     def handle(self, *args, **options):
-        fetch_and_store_fixtures()
-        self.stdout.write(self.style.SUCCESS('Successfully fetched and stored fixtures data'))
+        message = fetch_and_store_fixtures()
+        self.stdout.write(self.style.SUCCESS(message))

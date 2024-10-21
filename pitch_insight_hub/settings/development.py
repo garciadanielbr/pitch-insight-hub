@@ -1,3 +1,7 @@
 from .base import *
 
-# Override base settings here
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',  # Allow all users
+    ],
+}

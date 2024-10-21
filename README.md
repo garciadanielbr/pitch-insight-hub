@@ -45,7 +45,7 @@ Pitch Insight Hub is a Django-based football analytics platform that demonstrate
 
 4. Once the containers are running, open a new terminal and run the initial data population script:
    ```
-   docker-compose exec web python manage.py populate_initial_data
+   docker exec -it web python manage.py populate_initial_data
    ```
 
    This will populate the database with initial leagues and seasons data.
@@ -54,16 +54,24 @@ Pitch Insight Hub is a Django-based football analytics platform that demonstrate
 
 1. Access the Django admin interface at `http://localhost:8000/admin/` to manage leagues and seasons and `http://localhost:8000/api/` for the API.
 
-2. Before fetching data, set the `fetch_required` flag to True for the seasons you want to update. You can do this either through the Django admin interface or directly in the database.
-
-3. Use the provided management commands to fetch data from API-Football:
+2. Create a Superuser
+   To access the Django admin interface, you need to create a superuser. Run the following command in your terminal:
    ```
-   docker-compose exec web python manage.py fetch_teams
-   docker-compose exec web python manage.py fetch_fixtures
+   docker exec -it web python manage.py createsuperuser
+   ```
+   Follow the prompst to set a username, email and password.
+
+3. Before fetching data, set the `fetch_required` flag to True for the seasons you want to update. You can do this either through the Django admin interface or directly in the database.
+
+4. Use the provided management commands to fetch data from API-Football:
+   ```
+   docker exec -it web python manage.py fetch_teams
+   docker exec -it web python manage.py fetch_fixtures
+   docker exec -it web python manage.py fetch_players
    ```
    Note: These commands will only fetch data for seasons where `fetch_required` is True. After successful data fetching, the flag is automatically set to False.
 
-4. Explore the API endpoints for analytics:
+5. Explore the API endpoints for analytics:
    - Form Guide: `GET /api/teams/<team_id>/form-guide/`
 
 ## Advanced Queries
